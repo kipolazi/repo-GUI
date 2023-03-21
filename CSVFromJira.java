@@ -4,26 +4,29 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
-public class CSVFromJiraTest {
-    public static void main(String[] args) {
+public class CSVFromJira {
+
+    public static void csvFromJira() throws FileNotFoundException {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 //        options.setHeadless(false);
         options.addArguments("--incognito");
-        options.addArguments("--start-maximized");
+//        options.addArguments("--start-maximized");
+        options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
         driver.get("https://jira.b2b-center.ru/secure/Dashboard.jspa");
 //        Login
         WebElement webElementInputLogin = driver.findElement(By.xpath("//input[@id = 'login-form-username']"));
-        webElementInputLogin.sendKeys("r.volovik");
+        webElementInputLogin.sendKeys(username());
 
         WebElement webElementInputPass = driver.findElement(By.xpath("//input[@id = 'login-form-password']"));
-        webElementInputPass.sendKeys("......."); // настроить позже шифрование пароля!!!
+        webElementInputPass.sendKeys(password());
 
 
         WebElement webElementClickButtonEntrance = driver.findElement(By.xpath("//div[@class = 'buttons-container']/div[@class = 'buttons']/input"));
@@ -33,8 +36,8 @@ public class CSVFromJiraTest {
         WebElement webElementIssue = driver.findElement(By.xpath("//li/a[@href = '/issues/']"));
         webElementIssue.click();
 
-        WebElement webElementIssuesCurrentLink = driver.findElement(By.xpath("//li/a[@href = '/issues/' and @id = 'jira.top.navigation.bar:issues_drop_current_lnk']"));
-        webElementIssuesCurrentLink.click();
+        WebElement webElementIssuesNewtLink = driver.findElement(By.xpath("//li/a[@href = '/issues/?jql=' and @id = 'issues_new_search_link_lnk']"));
+        webElementIssuesNewtLink.click();
 
         WebElement webElementFilterClick = driver.findElement(By.xpath("//a[@title = 'Баги по ddd']"));
         webElementFilterClick.click();
@@ -47,6 +50,23 @@ public class CSVFromJiraTest {
 
         WebElement webElementClickDialogExport = driver.findElement(By.xpath("//button[@id = 'csv-export-dialog-export-button']"));
         webElementClickDialogExport.click();
-
     }
+
+
+    public static String username() throws FileNotFoundException {
+        File file = new File("C:\\Users\\r.volovik\\Desktop\\b2b center\\BugsFromJira1.txt");
+        Scanner scanner = new Scanner(file);
+        String username = scanner.nextLine();
+        return username;
+    }
+
+    public static String password() throws FileNotFoundException {
+        File file = new File("C:\\Users\\r.volovik\\Desktop\\b2b center\\BugsFromJira.txt");
+        Scanner scanner = new Scanner(file);
+        String pass = scanner.nextLine();
+        return pass;
+    }
+
+
 }
+
