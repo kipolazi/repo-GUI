@@ -54,14 +54,14 @@ public class CSVFromJira {
 
 
     public static String username() throws FileNotFoundException {
-        File file = new File("C:\\Users\\r.volovik\\Desktop\\b2b center\\BugsFromJira1.txt");
+        File file = new File("Путь к своему файлу, в котором записан только логин");
         Scanner scanner = new Scanner(file);
         String username = scanner.nextLine();
         return username;
     }
 
     public static String password() throws FileNotFoundException {
-        File file = new File("C:\\Users\\r.volovik\\Desktop\\b2b center\\BugsFromJira.txt");
+        File file = new File("Путь к своему файлу, в котором записан только пароль");
         Scanner scanner = new Scanner(file);
         String pass = scanner.nextLine();
         return pass;
